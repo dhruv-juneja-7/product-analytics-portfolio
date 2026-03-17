@@ -193,3 +193,16 @@ LIMIT 1
 id - row_number
 instead of visit_date as it is not sequential
 ```
+
+# Week - 3
+
+## Day - 17
+
+```
+F1 Podium Streak Query — Key learnings:
+1. ROW_NUMBER() OVER () — brackets after ROW_NUMBER always
+2. Date - integer needs INTERVAL in PostgreSQL
+3. ORDER BY streak_length DESC for "longest ever" questions
+4. LIMIT 10 for top N results
+5. CONCAT(forename, ' ', surname) for full driver name
+```
