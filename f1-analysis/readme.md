@@ -1,25 +1,41 @@
-## F1 Podium Streak Analysis
+# F1 Performance Analytics
 
-**Question:** Which F1 driver had the longest
-consecutive podium finishing streak in history?
+Advanced SQL analysis of Formula 1 World Championship
+data (1950–2024) — finding patterns in driver performance,
+championship battles, and race consistency.
 
-**Data:** Formula 1 World Championship dataset
-(1950–2020) — races, results, and drivers tables.
+Built as part of a structured transition into product
+analytics. Each query is paired with the business
+question, technical challenge, and real finding.
 
-**Approach:** Applied Gaps & Islands SQL pattern
-to group consecutive podium finishes per driver.
+---
 
-**Technical Challenge:** Race dates have natural
-gaps between seasons — standard date subtraction
-fails here because the difference shifts across
-season boundaries.
+## Dataset
 
-**Fix:** Created an overall race sequence number
-(rn_overall) ordered chronologically across all
-races, then used rn_overall minus per-driver
-row number as the group key. This treats each
-race as a sequential position regardless of
-calendar gaps.
+**Source:** Formula 1 World Championship (Ergast API)  
+**Tables Used:** races, results, drivers, driver_standings  
+**Period:** 1950–2024
+
+---
+
+## Analysis 1 — Consecutive Podium Streaks
+
+**File:** [f1_podium_streaks.sql](./f1_podium_streaks.sql)
+
+**Question:** Which F1 driver had the longest consecutive
+podium finishing streak (top 3 finishes) in history?
+
+**Pattern:** Gaps & Islands
+
+**Technical Challenge:** Race dates have natural gaps
+between seasons — standard `date - ROW_NUMBER()` fails
+because the difference shifts across season boundaries.
+
+**Fix:** Created `rn_overall` — an overall race sequence
+number ordered chronologically across all seasons — and
+used `rn_overall - rn_per_driver` as the group key.
+This treats each race as a sequential position regardless
+of calendar gaps.
 
 **Key Finding:**
 
@@ -32,11 +48,90 @@ calendar gaps.
 | Sebastian Vettel   | 11                  | Nov 2010 – Jul 2011 |
 
 Every driver in the top 5 is a World Champion —
-podium consistency and championships are
-directly correlated.
+podium consistency and championships are directly
+correlated.
 
-**SQL Pattern Used:** Gaps & Islands Version 2
-— both clocks built from scratch when master
-clock has natural gaps.
+---
 
-**File Used:** [f1_podium_streaks.sql](./f1_podium_streaks.sql)
+## Analysis 2 — Championship Clinch Point
+
+**File:** [f1_championship_clinch.sql](./f1_championship_clinch.sql)
+
+**Question:** At which race does the eventual F1 champion
+become mathematically uncatchable each season?
+
+**Pattern:** Cumulative counter + points gap calculation
+
+**Logic:** When the points gap between first and second
+place in the standings exceeds the maximum points still
+available in the remaining races — the title is
+mathematically clinched.
+
+**Technical Challenge:** Joining races to results
+multiplies rows — one race appears 20 times (once per
+driver). Used `COUNT(DISTINCT raceId)` instead of
+`COUNT(*)` to get accurate race counts per season.
+
+**Key Finding:**
+
+| Season | Champion       | Clinch Race          | Races Left |
+| ------ | -------------- | -------------------- | ---------- |
+| 2024   | Max Verstappen | Las Vegas Grand Prix | 2          |
+| 2023   | Max Verstappen | Japanese Grand Prix  | 6          |
+| 2022   | Max Verstappen | Japanese Grand Prix  | 4          |
+| 2021   | Max Verstappen | Abu Dhabi Grand Prix | 0          |
+
+Verstappen clinched earlier every year from 2021 to
+2023 — showing increasing dominance over the grid.
+2021 with 0 races remaining was the most dramatic
+title in modern F1 — decided on the final lap of
+the final race against Lewis Hamilton with equal
+points going into the weekend.
+
+---
+
+## Coming Next
+
+| Analysis                | Question                                                           | Pattern                 |
+| ----------------------- | ------------------------------------------------------------------ | ----------------------- |
+| Q3 — Season Rankings    | Top 3 drivers per season — how does ranking change year over year? | Dense Rank              |
+| Q4 — Qualifying vs Race | Does pole position guarantee a win?                                | Conditional Aggregation |
+
+---
+
+## SQL Patterns Used
+
+| Pattern                 | Description                                    |
+| ----------------------- | ---------------------------------------------- |
+| Gaps & Islands V2       | Consecutive streaks when master clock has gaps |
+| Running Sum             | Cumulative counter across ordered rows         |
+| Dense Rank              | Top N per partition                            |
+| Conditional Aggregation | Rates and ratios per group                     |
+
+---
+
+## Key Technical Learnings
+
+**1. Gaps & Islands with non-continuous dates**  
+When dates have natural gaps (season boundaries,
+missing races), use `rn_overall - rn_per_partition`
+instead of `date - rn`. Build both clocks from scratch.
+
+**2. COUNT(\*) after JOIN**  
+Always ask: does this JOIN multiply rows? One-to-many
+JOINs require `COUNT(DISTINCT)` not `COUNT(*)`.
+
+**3. Dynamic max points**  
+F1 points system changed multiple times across history.
+Calculate `MAX(points)` per season dynamically — never
+hardcode 25.
+
+---
+
+## About
+
+Built during a deliberate transition from CRM analytics
+into product analytics. Problems selected to demonstrate
+advanced SQL pattern recognition on real-world data.
+
+_Updated weekly as new analyses are added._
