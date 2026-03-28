@@ -62,9 +62,41 @@ changes across different eras.
 
 ---
 
+## 3. Top 3 Drivers by Wins per Season
+
+**Question:** For each season, who are the top 3 drivers based
+on the number of race wins?
+
+**Pattern Used:** Aggregation + window function (DENSE_RANK)
+
+| Season | Driver Name     | Wins | Rank |
+| ------ | --------------- | ---- | ---- |
+| 2024   | Max Verstappen  | 9    | 1    |
+| 2024   | Lando Norris    | 4    | 2    |
+| 2024   | Charles Leclerc | 3    | 3    |
+| 2023   | Max Verstappen  | 19   | 1    |
+| 2023   | Sergio Pérez    | 2    | 2    |
+| 2023   | Carlos Sainz    | 1    | 3    |
+
+**Key Insight:** Verstappen’s 2023 season stands out as one
+of the most dominant in F1 history, with 19 wins — far
+ahead of any other driver. The sharp drop from 19 to 2
+wins between rank 1 and rank 2 highlights the gap in
+performance that season.
+
+**Notable:** Some seasons may return more than 3 drivers
+due to ties, since DENSE_RANK assigns the same rank
+to equal win counts.
+
+**Technical Note:** Used `positionOrder = 1` to correctly
+identify race winners and avoid issues with non-numeric
+values in `position`. Aggregation was performed at the
+driver-season level, followed by DENSE_RANK partitioned
+by season to identify top performers.
+
+---
+
 ## Coming Next
 
-- **Q3:** Top 3 drivers by average finishing position
-  per season — how does the ranking change year over year?
 - **Q4:** Does qualifying position predict race result?
   Does pole position guarantee a win?
