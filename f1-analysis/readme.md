@@ -8,23 +8,17 @@ Built as part of a structured transition into product
 analytics. Each query is paired with the business
 question, technical challenge, and real finding.
 
----
-
 ## About
 
 Built during a deliberate transition from CRM analytics
 into product analytics. Problems selected to demonstrate
 advanced SQL pattern recognition on real-world data.
 
----
-
 ## Dataset
 
 **Source:** Formula 1 World Championship (Ergast API)  
 **Tables Used:** races, results, drivers, driver_standings  
 **Period:** 1950–2024
-
----
 
 ## Analysis 1 — Consecutive Podium Streaks
 
@@ -58,8 +52,6 @@ of calendar gaps.
 Every driver in the top 5 is a World Champion —
 podium consistency and championships are directly
 correlated.
-
----
 
 ## Analysis 2 — Championship Clinch Point
 
@@ -162,5 +154,118 @@ Max Verstappen recorded **19 race wins in the 2023 season**, the highest number 
 | Running Sum             | Cumulative counter across ordered rows         |
 | Dense Rank              | Top N per partition                            |
 | Conditional Aggregation | Rates and ratios per group                     |
+
+---
+
+## Analysis 4 — Pole Position to Win Conversion Rate
+
+**File:** [f1_pole_to_win_conversion.sql](./f1_pole_win_conversion_rate.sql)
+
+**Question:** Does starting from pole position guarantee
+a win? Which constructor converts pole to victory
+most reliably?
+
+**Product Analytics Equivalent:** Conversion rate
+analysis — does starting a trial guarantee a purchase?
+Does opening an email guarantee a click?
+
+**Pattern:** Conditional Aggregation
+
+**Technical Note:** Used NULLIF to prevent division by
+zero for constructors with no pole positions:
+`ROUND(SUM(pole_to_win) * 1.0 / NULLIF(SUM(poles), 0), 2)`
+
+**Key Finding:**
+
+| Constructor | Poles | Conversion Rate |
+| ----------- | ----- | --------------- |
+| Mercedes    | 135   | 75%             |
+| Red Bull    | 105   | 73%             |
+| Ferrari     | 104   | 55%             |
+| McLaren     | 64    | 48%             |
+| Williams    | 38    | 47%             |
+
+Ferrari has 104 pole positions but converts only 55% —
+identical to Benetton and far behind Mercedes and
+Red Bull. Ferrari qualifies brilliantly but
+consistently loses races. This data confirms
+statistically what F1 fans have debated for years.
+
+**Important:** Toro Rosso's 100% rate is based on
+a single pole position — a small sample size warning
+worth noting in any conversion rate analysis.
+
+---
+
+## SQL Patterns Demonstrated
+
+| Pattern                 | Query               | Product Analytics Use Case                |
+| ----------------------- | ------------------- | ----------------------------------------- |
+| Gaps & Islands V2       | Podium Streaks      | User activity streaks, session continuity |
+| Cumulative Counter      | Championship Clinch | Threshold detection, activation points    |
+| Window Ranking          | Top 3 Per Season    | Leaderboards, cohort rankings             |
+| Conditional Aggregation | Pole Conversion     | Conversion rates, funnel metrics          |
+
+---
+
+## Key Technical Learnings
+
+**1. Gaps & Islands with non-continuous sequences**
+When the master clock has natural gaps — use
+`rn_overall - rn_per_partition` instead of
+`value - rn`. Build both clocks from scratch.
+
+**2. COUNT(\*) after JOIN multiplies rows**
+Always ask: does this JOIN multiply rows?
+One-to-many JOIN → use `COUNT(DISTINCT key)` not `COUNT(*)`
+
+**3. NULLIF for safe division**
+`value / NULLIF(denominator, 0)` returns NULL
+instead of throwing a division by zero error.
+Always use for conversion rate calculations.
+
+**4. DENSE_RANK vs ROW_NUMBER**
+Use DENSE_RANK when ties should share the same rank.
+Use ROW_NUMBER when you need exactly N unique rows.
+
+**5. Dynamic max points**
+Never hardcode points values across historical data —
+F1 points system changed multiple times. Calculate
+`MAX(points)` per season dynamically.
+
+## Interview Talking Points
+
+**"Tell me about a technical challenge you solved"**
+Race dates have natural gaps between seasons — standard
+date subtraction fails for streak analysis. I solved
+this by creating an overall race sequence number as
+the master clock instead of using calendar dates
+directly.
+
+**"How do you handle data quality issues?"**
+The F1 dataset uses \N for NULL values from MySQL
+exports. I handled this by importing everything as
+VARCHAR into staging tables first, then casting to
+correct types during the INSERT — never trusting
+CSV data types directly.
+
+**"Give me an example of a conversion rate analysis"**
+Ferrari has 104 pole positions but only converts 55%
+to race wins — far behind Mercedes at 75%. The
+interesting finding is that qualifying performance
+and race performance measure different capabilities.
+A small sample size caveat also applies — Toro Rosso
+shows 100% conversion on a single pole position.
+
+## About
+
+Built during a deliberate transition from CRM analytics
+into product analytics. Problems selected to demonstrate
+advanced SQL pattern recognition on real-world data
+with genuine business context.
+
+_Updated weekly as new analyses are added._
+
+**GitHub:** [github.com/dhruv-juneja-7/product-analytics-portfolio](https://www.github.com/dhruv-juneja-7/product-analytics-portfolio)
 
 _Updated weekly as new analyses are added._

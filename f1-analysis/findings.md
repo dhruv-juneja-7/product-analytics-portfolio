@@ -96,7 +96,47 @@ by season to identify top performers.
 
 ---
 
+## 4. Pole Position to Race Win Conversion Rate
+
+**Question:** Does starting from pole position guarantee
+a win? Which constructor converts pole to victory most reliably?
+
+**Pattern Used:** Conditional Aggregation —
+`SUM(CASE WHEN condition THEN 1 ELSE 0 END) / COUNT(*)`
+
+**Technical Note:** Used NULLIF to prevent division by
+zero errors for constructors with zero pole positions.
+`ROUND(SUM(pole_to_win) * 1.0 / NULLIF(SUM(poles), 0), 2)`
+
+| Constructor | Poles | Pole-to-Win | Conversion Rate |
+| ----------- | ----- | ----------- | --------------- |
+| Toro Rosso  | 1     | 1           | 1.00            |
+| Brawn       | 5     | 4           | 0.80            |
+| Mercedes    | 135   | 101         | 0.75            |
+| Red Bull    | 105   | 77          | 0.73            |
+| Renault     | 20    | 12          | 0.60            |
+| Benetton    | 11    | 6           | 0.55            |
+| Ferrari     | 104   | 57          | 0.55            |
+| McLaren     | 64    | 31          | 0.48            |
+| Williams    | 38    | 18          | 0.47            |
+
+**Key Insight:** Ferrari has 104 pole positions but
+only converts 55% to wins — identical to Benetton
+and far behind Mercedes (75%) and Red Bull (73%).
+Ferrari qualifies brilliantly but consistently loses
+races — a widely debated narrative in F1 that this
+data confirms statistically.
+
+**Small Sample Warning:** Toro Rosso's 100% rate is
+misleading — based on a single pole position. Always
+check sample size before drawing conclusions from
+conversion rates.
+
+---
+
 ## Coming Next
 
-- **Q4:** Does qualifying position predict race result?
-  Does pole position guarantee a win?
+- **Q5:** Which circuits produce the most overtakes?
+  (lap position changes per race per circuit)
+- **Q6:** Driver age vs performance — do drivers peak
+  at a specific age in F1?
