@@ -206,3 +206,9 @@ F1 Podium Streak Query — Key learnings:
 4. LIMIT 10 for top N results
 5. CONCAT(forename, ' ', surname) for full driver name
 ```
+
+## Day - 29
+
+```
+NULLIF for division by zero: round(numerator * 1.0 / NULLIF(denominator, 0), 2) Use whenever denominator could be zero. Returns NULL instead of error — cleaner than CASE WHEN.
+```

@@ -8,7 +8,7 @@ with wins_cte as (
     group by r.year, rs.driverid
 ),
 ranks_cte as (
-    select wc.season, wc.driverid, concat(d.forename,' ', d.lastname) as driver_name, wc.wins
+    select wc.season, wc.driverid, concat(d.forename,' ', d.surname) as driver_name, wc.wins
     , dense_rank() over(partition by season order by wins desc) as rn
     from wins_cte wc
     join drivers d on wc.driverid = d.driverid
