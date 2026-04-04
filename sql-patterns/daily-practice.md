@@ -1,3 +1,9 @@
+### Question - Attendance Streak
+
+You have a table of employee login records. Find each employee's consecutive attendance streaks — meaning, group the days they came in without any gap, and show the start date, end date, and length of each streak.
+Table name - attendance
+columns - emp_id, work_dates
+
 ### Question - Increasing Streak
 
 ![alt text](Increasing_Streak.jpeg)
@@ -66,6 +72,14 @@ group by emp_id, group_id
 ```
 
 ## LC 1454 Active Users
+
+> Question - Active users are those who logged in to their accounts for five or more consecutive days.
+> Write a solution to find the id and the name of active users.
+> Return the result table ordered by id.
+
+> Tables - accounts - id, name
+
+            logins - id, login_date
 
 ```sql
 with rankings as (
