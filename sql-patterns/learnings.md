@@ -212,3 +212,7 @@ F1 Podium Streak Query — Key learnings:
 ```
 NULLIF for division by zero: round(numerator * 1.0 / NULLIF(denominator, 0), 2) Use whenever denominator could be zero. Returns NULL instead of error — cleaner than CASE WHEN.
 ```
+
+## Day - 30
+
+Always run SELECT column_name FROM information_schema.columns WHERE table_name = 'results' before writing to confirm exact names.
