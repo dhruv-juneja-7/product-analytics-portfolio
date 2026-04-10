@@ -22,3 +22,16 @@ WHERE rn = 1 after RANK() OVER (PARTITION BY key1, key2 ORDER BY rank_column)
 Always check: does my groupby have one row per group I expect?
 Print df.groupby(['key1','key2']).size() to verify before aggregating.
 ```
+
+# Day 40
+
+> Users doing X after doing Y
+
+```
+The mental model for these problems:
+Any "did user do X after doing Y" question follows this structure:
+
+CTE 1: find the anchor event (first order, signup, first purchase)
+CTE 2: join back to same table to find subsequent events within a window
+Filter: event date > anchor date AND event date <= anchor date + window
+```
