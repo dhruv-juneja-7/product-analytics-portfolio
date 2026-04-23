@@ -178,6 +178,11 @@ order by start_date
 
 ### LC 180 Consecutive Numbers.
 
+> Question: Find all numbers that appear at least three times consecutively.
+> Return the result table in any order.
+
+> Tables - logs - id, num
+
 ```sql
 with lag_table as (
     select id, num, lag(num) over(order by id) as lag_num
@@ -316,6 +321,11 @@ order by event_time
 
 ## LC 601 — Human Traffic of Stadium
 
+> Question - Write a solution to display the records with three or more rows with consecutive id's, and the number of people is greater than or equal to 100 for each.
+> Return the result table ordered by visit_date in ascending order.
+
+> Table - stadium - id, visit_date, people
+
 ```sql
 with groupings as (
     select id, visit_date, people ,
@@ -356,4 +366,50 @@ select s.driverId, concat(d.forename, ' ', d.surname), streak_start_date, streak
 from streaks s
 join drivers d on s.driverid = d.driverid
 order by streak_length desc
+```
+
+# GMV and MoM Growth Question
+
+-- Calculate MoM growth for top3 categories gmv vise each month
+-- columns - product_id, category, order_value, order_date
+-- table name - orders
+
+```sql
+with gmv_total as (
+    select date_trunc('month', order_date) as month
+    , category
+    , sum(order_value) as gmv
+    from orders
+    group by 1, 2
+),
+lag_gmv as (
+    select month, category, gmv
+    , lag(gmv) over(partition by category order by month) as prev_gmv
+    , dense_rank() over (partition by month order by gmv desc) as rn
+    from gmv_total
+)
+select month, category, gmv
+, round((gmv-prev_gmv)/ nullif(prev_gmv, 0),1) as mom_growth
+from lag_gmv
+order by month, gmv desc
+```
+
+# Churn and retained users
+
+-- Find the user_ids who ordered in Jan-2024 but churned in Feb-2024
+-- Find the user_ids who ordered in Jan-2024 and in Feb-2024
+
+```sql
+select u.user_id
+, case when u.user_id is null then 'churned' else 'retained' as status
+from (
+    select distinct user_id
+    from orders
+    where date_trunc('month', order_date) = '2024-01-01'
+) a
+left join (
+    select distinct user_id
+    from orders
+    where date_trunc('month', order_date) = '2024-02-01'
+) b on a.user_id = b.user_id
 ```
