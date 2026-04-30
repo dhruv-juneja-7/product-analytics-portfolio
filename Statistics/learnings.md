@@ -109,3 +109,81 @@ print(f"Sample size needed per group: {n:.0f}")
 effect size - how much change you are expecting to see
 power - it tells that if there is a real difference than what is the probability that you will successfully detect the change
 alpha - this gives the tolerance, that is if probability of not detecting a change is below this value that you are fine with it.
+
+## Correlation
+
+> Pearson Correlation
+
+- It measures how closely two variables are linearly related.
+- It indicates how well one variable can be predicted from another (only for linear relationships).
+- It does not imply causation. A high correlation only means both variables move together; an external factor may be driving both.
+- The value of correlation ranges from -1 to +1.
+- Correlation = +1 or -1 means a perfect linear relationship, i.e., all data points lie exactly on a straight line (y = mx + c or y = -mx + c).
+- The closer the value is to ±1, the stronger the linear relationship.
+- Correlation = 0 means no linear relationship; however, a non-linear relationship may still exist.
+- A smaller p-value indicates that the observed correlation is statistically significant and unlikely due to random chance.
+- Correlation is sensitive to outliers, which can distort the value significantly.
+- A sufficient amount of data is required to have confidence in the correlation value.
+- Pearson correlation only captures linear relationships and may fail for curved or complex patterns.
+
+![alt text](image.png)
+
+> Important Edge Cases / Limitations:
+
+- Non-linear relationships: Correlation can be close to 0 even when a strong relationship exists (e.g., quadratic patterns).
+- Outliers: A few extreme values can significantly increase or decrease correlation.
+- Range restriction: Limited variation in data can reduce observed correlation.
+- Correlation does not indicate direction of causality.
+
+> Next Steps:
+
+- What is covariance and how is it calculated?
+- What is R-squared and how is it related to correlation?
+
+## Correlation does not imply causation
+
+> Suicides
+
+- Correlation - Men have higher suicide rates than women
+- Causation - Social norms, behavioral patterns, and the use of more lethal methods explain the difference, not gender itself
+- Confounding Factor - Men tend to use more lethal methods, which reduces survival chances
+
+> Breakfast & Family Dinners
+
+- Correlation - Eating breakfast is linked to weight loss; family dinners are linked to lower drug use among children
+- Causation - People who eat breakfast often follow healthier lifestyles; families with strong relationships are more likely to dine together
+- Confounding Factor - Breakfast eaters may exercise more and maintain better routines; strong family bonding and communication reduce drug use, not the dinner itself
+
+> Hormone Therapy and Heart Disease
+
+- Correlation - Women undergoing hormone therapy show lower risk of heart disease
+- Causation - Healthier lifestyle choices (diet, exercise) contribute more to reduced risk than therapy alone
+- Confounding Factor - Women on hormone therapy are often more health-conscious and proactive about their well-being
+
+## Additional Concepts (Important for Interviews)
+
+> Spurious Correlation
+
+- Definition - Two variables appear correlated but have no real relationship
+- Example - Ice cream sales and drowning cases increase together
+- Reason - A hidden variable (summer/temperature) drives both
+- Insight - Always check for hidden variables before drawing conclusions
+
+> Simpson’s Paradox
+
+- Definition - A trend observed in overall data reverses when data is split into groups
+- Example - A product seems better overall, but worse in every individual region
+- Insight - Aggregated data can be misleading; always analyze segmented data
+
+> Confounding Variable (General Form)
+
+- A third variable (Z) affects both X and Y, creating a misleading relationship
+- Structure:
+  - Z → X
+  - Z → Y
+- Insight - Proper analysis requires identifying and controlling confounders
+
+> Key Takeaway
+
+- Correlation is a starting point, not a conclusion
+- Always validate with domain knowledge, segmentation, and visualization before making decisions
