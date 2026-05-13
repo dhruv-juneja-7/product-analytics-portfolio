@@ -411,3 +411,36 @@ that includes: rendering check on 5 most common mobile
 screen sizes, interactive element accessibility audit,
 pop-up/modal close button visibility at all breakpoints.
 No UI change ships to production without this sign-off."
+
+### Better Monitoring
+
+LAYER 1 — OUTCOME (you have this)
+Bounce rate for mobile web users (daily, not weekly)
+
+LAYER 2 — LEADING INDICATORS (you don't have these)
+These tell you the fix is working BEFORE bounce rate recovers:
+
+• Pop-up close rate after fix
+→ if users can now close it → engagement will follow
+→ check within 24 hours of deploying fix
+
+• Scroll depth on landing pages (mobile web)
+→ should increase immediately after fix
+→ target: recover to pre-pop-up scroll depth levels
+
+• Landing page → next page progression rate
+→ are users moving past the landing page?
+→ this moves faster than overall bounce rate
+
+LAYER 3 — GUARDRAIL METRICS (you don't have these)
+Things you can't break while fixing bounce rate:
+
+• Conversion rate / purchase completion rate
+→ fixing bounce rate but losing sales = wrong fix
+
+• Pop-up engagement rate (if pop-up is kept after fix)
+→ if you fix the close button but the pop-up itself
+drives zero engagement → question whether to keep it
+
+• Mobile web revenue
+→ ultimate guardrail — did the fix recover revenue?
