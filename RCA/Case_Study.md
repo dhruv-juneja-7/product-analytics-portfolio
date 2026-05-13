@@ -290,3 +290,124 @@ Case 3: "Curriculum is harder + mentors reduced"
 → answer: mid-course students, not just new ones
 
 > Before closing any root cause, ask: "Who specifically does this hit hardest, and does that group have a way out?" That question would have found the mid-course student problem immediately.
+
+# Case Study 4
+
+## Tata Cliq's website bounce rate has increased by 25%
+
+### Questions
+
+1. Is bounce rate defined as no. of people who left after visiting single page / total no. of people visiting the website
+2. Is this increase seen in a particular region or city or across all cities?
+3. Is it same on every platform - ios and android?
+4. Is this compared to previous month or previous weeks.
+5. Is this for a particular type of page which is related to electronics, fashion, women wear, men wear etc.
+6. Is this particularly for new users or even for existing customers
+7. what is the average time spend by the bounced customers on the website.
+
+### Data/Definition
+
+1. Has the metric calculation changed or there is a change in its definition?
+2. Is the data pipeline broken?
+3. Has there been a refresh failure
+4. Are there any new data sources that may have diluted the metric
+5. has there been a recent data migration
+6. What is the source of the customers for maximum bounce rate is observed.
+
+### Internal Reasons
+
+a. Product/Feature changes
+
+- Did a new feature was introduced which may have caused this coinciding with the time of this increase.
+- Has new products or new category been listed for which this bounce rate is seen
+- Are there any items that have been continuously out of stock or not available since the bounce rate rose.
+- Have any products or categories been removed from the website
+- has a discount or promotion campaign recently added
+- has there an increase in queries related to particular product/category
+
+b. Tech change
+
+- has there been an unresolved bug on the website or is there a rise in the support tickets related to any functional issue
+- is this same for all platforms - ios and android
+- is the loading time and rendering time same on all devices of the bouced users
+- has there been a ui change making it difficult to find the product/adding it to cart.
+- has there been a third party api failure.
+- any server or data migrations done.
+
+c. Operational changes
+
+- has there been a increase in the listed product prices
+- is there been a rise in returned or cancelled orders
+- is there any increase in the ang delivery time
+
+### External Reasons/Market
+
+- Does any new competitor launched in the area in same domain offering products at lower prices
+- is there any negative media coverage
+- any regulatory changes or legal changes at the same time
+- any natural calamity happened in the affected area
+- any change in the custome support policy or return/cancellation policy
+
+### Answers Received
+
+- observed over the past week compared to the week before that.
+- competitors are running a campaign as it is the end of the year (didn't ask any specific question for it)
+- ui change- banners on the home page and a pop-up on the landing pages.- introduced around a week back.
+- increase in bounce rate is consistently linked to mobile web users.
+- the positioning of the pop-up on mobile devices hides the close button, making it difficult for users to close it. (didn't ask this question specifically)
+
+### Validation
+
+- compare bounce rate for mobile web users vs app users, website users on laptops, computers
+- rise in support tickets or queries related to pop-up shown on mobile web
+- click on the pop-up for the users for which bounce rate is observed so if it is higher than other platform users it means the user are trying to close the pop-up but are not able to do so.
+- no. of page refreshes/reloads for these users
+- avg time spend on the landing page if it is increase for the impacted users it is a signal that they are facing some issue on the page
+
+### Fixes
+
+1. Short Term Fix
+
+- fix the pop-up issue on the landing page, it is a simple ui change on the frontend
+
+2. Long term fix
+
+- always do A/B test before rolling out any UI/UX change
+
+Monitoring
+
+- Bounce rate after the fix especially for the mobile web users.
+- CTR - click through rate - if it is increased then users are engaging with the platform
+- avg time spend by user per session and no. of sessions per user.
+
+### Better Fixes
+
+1. Short Term Fix
+
+YOUR FIX:
+"Fix the pop-up — simple frontend change"
+
+STRUCTURED FIX:
+WHO: Mobile web users on landing pages
+WHAT: Two immediate options —
+Option A (fastest, 2-4 hours): Roll back the
+pop-up entirely until mobile web version is fixed
+Option B (1-2 days): Push a hotfix that ensures
+close button is visible at all screen sizes
+and positions (use fixed positioning, not absolute)
+WHY: Every hour the pop-up remains live = continued
+bounce rate damage + lost conversion revenue
+HOW FAST: Rollback can be done in hours. Hotfix in 1-2 days.
+Start with rollback, then deploy fix, then re-enable.
+
+2. Long Term Fix
+
+GENERIC (what you wrote):
+"Always A/B test before UI changes"
+
+SPECIFIC (what a senior analyst says):
+"Implement a mobile-first QA checklist for all UI changes
+that includes: rendering check on 5 most common mobile
+screen sizes, interactive element accessibility audit,
+pop-up/modal close button visibility at all breakpoints.
+No UI change ships to production without this sign-off."

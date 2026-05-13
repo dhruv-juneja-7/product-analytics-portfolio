@@ -335,3 +335,175 @@ Provide updates and notifications to keep users informed about their order statu
 
 Monitor/Analyze:
 Set up real-time monitoring of service completion rates. Track the effectiveness of increased doctor availability through the following metrics:
+
+# Tata Cliq's website bounce rate has increased by 25%
+
+## Questions
+
+Me: To reiterate the problem statement, has the bounce rate increased by 25% across the entire website, and this increase has not been observed on the mobile application?
+
+Interviewer: Yes, that is correct.
+
+Me: Has the bounce rate increased by 25% across the entire website or is the increase associated with only specific pages?
+
+Interviewer: The increase is observed across the entire website.
+
+Me: How is the bounce rate metric calculated? Is it the number of visitors who navigate away from the site after viewing only one page divided by the total page visits as a percentage?
+
+Interviewer: Yes, that is correct.
+
+Me: Has there been a change in the method of calculating this metric recently?
+
+Interviewer: No, there have been no changes to the calculation method.
+
+Me: Has this increase been observed in a specific region or across all regions where TataCliq operates?
+
+Interviewer: The increase has been observed across multiple regions.
+
+Me: Is the increase sudden or over a period of time? Over what period has this 25% increase been observed? (e.g., week over week, or month over month)
+
+Interviewer: The increase has been sudden, observed over the past week compared to the week before that.
+
+Me: Is there a correlation between the user segments and the increased bounce rate?
+
+Interviewer: The increase is consistent across all user segments.
+
+Me: Are there specific traffic sources contributing more to the bounce rate increase - Direct Traffic, Organic Search, Referral Traffic etc?
+
+Interviewer: The bounce rate increase is observed across various traffic sources.
+
+Me: In addition to the bounce rate, do we also have other related metrics - such as Time on Page?
+
+Interviewer: No, currently we do not have any such data.
+
+Me: Got it. Since bounce rate is the number of one-page visits divided by total page visits, while the metric is increasing across different sources, there are two possibilities:
+
+1. Total page visits are decreasing significantly, which means the user traffic is decreasing
+
+2. ⁠Total page visits are not decreasing significantly, which means the number of one-page visits is increasing significantly
+
+Has there been an increase in total page visits?
+
+Interviewer: No, that has remained constant.
+
+‍
+
+## Identify Possible Causes:
+
+List all possible internal and external factors that could have led to this situation. The actual cause could be one of them or a combination of both, insome situations. Use data obtained from the clarifying questions to further narrow down.
+
+Me: Now that I have clarified the problem statement and we see that the number of one-page visits has increased significantly, I will explore a few external factors that might have led to this and then move on to internal and operational factors. Does that work?
+
+Interviewer: Yes, this works. You may proceed with exploring external factors.
+
+## External Factors:
+
+Me: Are there any new competitors who might have taken over, or existing competitors with new offerings?
+
+Interviewer: There has been no drastic increase in competition as such.
+
+Me: Has there been any news of new marketing campaigns by our competitors that might be affecting us?
+
+Interviewer: Our competitors have been running some campaigns as it is almost the end of the year - a time when most e-commerce sites run their sales.
+
+Me: Are we as TataCliq also running any sale on our website?
+
+Interviewer: We have no ongoing sales currently, although there is one coming up in a week.
+
+Me: Could there have been a major event or holiday that led to changes in user behavior (e.g., festival season, major sale events)?
+
+Interviewer: Other than the fact that it is sale season, no other major events that could affect user behavior have occurred recently.
+
+Me: Has there been any negative media coverage about Tata CLiQ or its products, or a change in public sentiment towards Tata Cliq?
+
+Interviewer: No, there has been nothing as such that has crossed our radar.
+
+Me: Have there been any regulatory changes affecting online shopping or e-commerce operations?
+
+Interviewer: No recent regulatory changes.
+
+Me: Could there be seasonal variations or economic downturns affecting customer behavior?
+
+Interviewer: There has been no significant seasonal variation or economic downturn reported.
+
+### Internal Factors:
+
+(a) Product Changes:
+Me: Since the increase in bounce rate is associated with the website, I would like to check if there have been any UI/UX changes on the website?
+
+Interviewer: Yes, as I previously mentioned, we are running a sale next week so there are a few UI elements added to make users aware of the same.
+
+Me: By UI elements do we mean just banners on the home page? Are there any other type of elements that were introduced?
+
+Interviewer: Yes, banners on the home page and a pop-up on the landing pages.
+
+Me: By UI elements do we mean just banners on the home page? Are there any other types of elements that were introduced?
+
+Interviewer: Yes, banners on the home page and a pop-up on the landing pages.
+
+Me: Do we have data on when these changes were introduced on the website?
+
+Interviewer: It seems to have been around a week back.
+
+Me: Were there changes to the navigation system, maybe a feature change that hinders the user experience?
+
+Interviewer: No changes to the navigation system have been made.
+
+Me: I would like to clarify the user journey to understand any possible changes in it: User Journey for visiting the website:
+Users enter the website -> See a new pop-up for the upcoming sale -> Try to close the pop-up -> Continue browsing the website.
+
+Interviewer: Yes, that is the correct user journey.
+
+(b) Tech Issue/Bug:
+Me: Have there been any bugs or issues that were reported, or support tickets raised?
+
+Interviewer: No significant bugs or issues have been reported recently.
+
+Me: Can the increased bounce rate be traced back to specific website versions or devices (desktop users vs mobile users)?
+
+Interviewer: The increase in bounce rate is consistently linked to mobile web users.
+
+Me: Are users able to view the UI elements on their screen? Is it possible that the mobile web users are unable to view certain elements of the pop-up that is visible to the desktop users?
+
+Interviewer: You are right, the positioning of the pop-up on mobile devices hides the close button, making it difficult for users to close it.
+
+‍
+
+(c) Backend Infrastructure Change:
+Me: Now that I have an idea what the root cause is, I would just like to confirm that there haven’t been any backend infrastructure changes, such as server migrations or database updates, that could have caused service interruptions or data loss?
+
+Interviewer: No significant backend changes have been made recently.
+
+‍
+
+## Analyze the Causes:
+
+Recent Website Redesign and New Pop-up Introduction:
+
+Data Analysis: Examine the bounce rate before and after the introduction of the new pop-up and website redesign. Identify if the increase correlates with these changes.
+
+User Feedback: Review user feedback and complaints regarding the new pop-up, especially on mobile devices.
+
+Time Spent Analysis: Compare the time spent on the website by users before and after the changes. Identify any significant drop in engagement.
+
+Mobile Optimization Issues:
+
+Technical Audits: Perform technical audits to check for issues with the new pop-up's positioning and functionality on mobile devices.
+
+A/B Testing: Conduct A/B testing to compare the bounce rate with and without the pop-up on mobile devices.
+
+## Plan and Implement Solution(s):
+
+Improve Pop-up Functionality:
+Ensure the close button is easily accessible and visible on all devices, especially mobile. A/B tests different versions of the pop-up to identify the most user-friendly design. Adjust the timing and frequency of the pop-up to avoid disrupting the user experience.
+
+Enhance Mobile Optimization:
+Ensure all elements of the website, including the pop-up, are optimized for mobile devices. Regularly perform audits to check for any mobile optimization issues.
+
+## Monitor/Analyze:
+
+Set up real-time monitoring of bounce rates and user behavior, especially for mobile users. Track the effectiveness of implemented solutions through the following:
+-Bounce Rate: The percentage of visitors who navigate away from the site after viewing only one page. Monitor the overall bounce rate, especially onmobile devices. Compare the bounce rate before and after implementing the solutions to see if there's a decrease.
+-Click-Through Rate (CTR) on Pop-Up: The percentage of users who click on the pop-up. Measure how many users are interacting with the pop-up. A higherCTR could indicate that the pop-up is more user-friendly and engaging.
+-Time on Page: The average time users spend on a particular page. Analyze the time spent on key landing pages after the pop-up issue is resolved. An increase in time on the page indicates improved engagement.
+-User Engagement Metrics (number of pages viewed per session, average session duration, etc): Monitor these metrics to gauge overall user engagement. An increase in the number of pages viewed per session indicates a more satisfying user experience.
