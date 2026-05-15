@@ -444,3 +444,168 @@ drives zero engagement → question whether to keep it
 
 • Mobile web revenue
 → ultimate guardrail — did the fix recover revenue?
+
+# Case Study 5
+
+## Rapido’s rider rating has dropped by 10%
+
+### Questions
+
+1. What - how do you measure the rider rating, is it total rating for all the drivers divided by no. of people who have submitted the rating
+2. When - the drop in rating is compared to the last week or the last month
+3. Where(Segment) - is this for all the areas or a particular city. is this for cab rider, auto, or bike riders. And if its car then is it for economy or premium cab or any other cab.
+4. what was the average distance travelled by the rider for whom the ratings have decreased
+5. How much percentage of the affected users were giving a tip?
+
+### Answers received
+
+1.  Rider rating is the rolling average of all ratings received in the past 90 days.
+2.  drop is for this month as compared to the last month and not a sudden overnight drop.
+3.  Particularly in Bengaluru region and for Bike rides
+4.  drop by 35% among the affected segment and for short bike rides only 18% are giving a tip as compared to 28% previously.
+5.  rating drop is mainly during the peak hours 8 to 10 AM and 6 to 9 PM
+6.  ride cancellations have increased by 22% in Bengaluru for bike rides. They are happening on average 6 to 8 minutes after the ride is accepted — so the rider accepts the booking but cancels before reaching the pickup point.
+
+First of all to clarify this is Rapido case study so here rider means the person who is booking the ride.
+
+Based on the answers i have a hypotheses in mind -
+
+1. It is mostly happening for bike rides and during the peak hours. During peak hours the traffic in Bengaluru is extremely high and there are peak surchages added on the bike ride to compensate for that, and it usually takes more time for the driver to reach the pickup point.
+   Usually rider books multiple rides simultaneously to increase the chances of getting a ride. And after he has accepted the booking on rapido, if he gets a better price at other platform where the ride gets accepted after a little later say 5-7 minutes then he cancels the existing ride on the rapido.
+   This causes the driver or captain to give a negative rating to the rider.
+
+Before accepting this cause let me evaluate other factors that causing this -
+
+### Data driven causes
+
+1. has there been a change in the metric deifinition or the way the metric is calculated for rating of riders recently?
+2. is the data pipeline broken
+3. has there been a dashboard refresh failure that may have caused this?
+4. has there been a recent data migration.
+5. is there an introduction of new data sources that may have diluted the metric?
+
+### Internal Causes
+
+I. Product/Feature changes
+
+1. is there lauch of a new feature recently coinciding with the time of drop
+2. has there been increase in the fees charged from the rider(customer)
+3. is there been introduction of any new step in the funnel after the user has accepted the ride.
+4. Since the app layout used by the driver is different - so has there been a change in which driver accepts the ride or any change in the maps layout or any change that causes a delay in the arrival time of the driver.
+5. is there a removal of any discount offers or promo codes for the customer.
+6. is this for new users or for retained users.
+
+II. Tech changes
+
+1. Has there been increase in the number of support tickets for any bug faced by the user while on the app.
+2. is this for all the platforms or specific to ios or android platform or any specific app version
+3. is the rendering time and loading time same for every user whose rating has dropped
+4. has there been anty third party api failures
+
+III. Operational changes
+
+1. is there any change in the customer support policy
+
+### External/Market Factors
+
+1. has any competitor launched in Bengaluru region offering lower prices, or are there any promotional campaigns or discount offers being rolled out by the existing customer.
+2. has there been a negative media coverage recently.
+3. is there any construction work affecting the arrival of the driver to the pick up point due to which the driver has to take the long route.
+4. any regulatory or legal changes the may have affected this.
+
+-- Claude: please tell me whether there are any reduntant causes for this question that do not make sense. Currently i am asking these questions because i am using the fame work we discussed, Answer the above quesion so that i can move next to validation, fixes and monitoring.
+
+### Answers received
+
+-> 6 weeks ago → Schedule ride feature launched
+-> 6 weeks ago → Driver app navigation updated (longer routes)
+-> 6 weeks ago → Ola and Bounce begin discount campaigns
+-> 5 weeks ago → Surge pricing increased 20% for peak bike rides
+-> 5 weeks ago → Discount code for short rides discontinued
+-> Past month → Rider cancellations +22% (captain-initiated,
+6-8 min after acceptance)
+-> Past month → Tip rate drops 28% → 18%
+-> Past month → Rider rating drops 10% (short rides, peak hours)
+-> 30% rise in support tickets, stating ride cancellations by captains, and longer-than-expected pickup wait times.
+
+### Hypotheses
+
+- Before coming to the hypothesis i want to know is the ride cancellations and rating drop for users who are particularly scheduling the ride. And how much time before the scheduled time the cancellation is being done.
+- If this is majorly for schduled ride, then since such rides do not guarantee that the driver will surely be assigned so people usually keeps other apps as a backup. And the schdule feature coincides with the driver taking long route to arrive the place at peak hours so the pickup time may be more than the scheduled time causing rider to use the earliest available option.
+- After that, the increase in pricing during peak hours and removing the discount at the same time as of price rise and a week after the competitor has launched its discount campaigns may have made customers to switch to other platforms like Ola and Bounce with less pricing and discount for short rides during peak hours.
+- This has also caused the riders to give less tip to the captains which causes less Captains to accept the ride.
+- This overall adds to drop in ratings for the riders.
+
+### Validation
+
+- Cancellation rate before and after the drop is observed especially for bike rides
+- Cancellation rate before and after the discounts were removed and prices were increased especially for bike rides
+- cancellation rate for schedules and non-scheduled rides
+- avg delay in the arrival time for the cancelled rides split by before and after the navigation feature change for both scheduled and non-scheduled rides and overall
+- Signal: if the cancellation rates have been increased at the same time as that of price rise and discounts removal then this is the reason for the drop
+
+### Fixes
+
+Short Term fix
+
+Who - the rider rating majorly is for the retained Riders. This decreases the chances of there requests being accepted and can cause a potential churn of such users.
+
+What - reintroduce the discounts to dampen the competitor effect. And if the driver is taking longer than expected then some discount should be given to the rider.
+If the rider is stuck in traffic then prices during the peak hours should be increased further so that people book less during the peak hours especially for scheduled rides but since the discounts
+will be given outside the peak hours this can make people to not book the ride during peak hours.
+
+Fix the navigation feature as it is causing the rider to take more time due to longer route leading the customer to change to other platform
+
+Why - this can help to reducing the number of bookings during peak hours which will inturn reduce cancellations
+how long - the fix could be done within 3-4 days and by A/B testing it on riders it could be rolled out in 3 to 4 weeks
+increase in pricing of peak hours and giving discount outside of peak hours - this effect will be visible instantly so within 1-2 days
+
+Long term Fix
+
+- the users should always be informed prior whenever the discounts are going to be over and the prices are going to be increased preventing them to cancelled the ride after seeing the price rise. If they would be aware that the prices are going to be increased then they would not book at the very beginning.
+
+### Monitoring
+
+- Outcome metric - avg rider rating especially for bike rides
+- Leading indicators - cancellation rates and no. of bookings during the peak hours, avg time to arrive for a driver after accepting the ride
+- Guarrail metrics - overall no. of bookings, no. of active users, avg order amoount per user - they should not decrease at all.
+
+### Feedback -
+
+> Gaps
+
+1. Timeline check of causes, If rating starts declining at 5 weeks ago
+   (surge + discount removal) → pricing is primary cause.
+   If decline starts at 6 weeks ago → navigation or
+   competitor is primary cause.
+
+2. Behavioural data, didn't check time of acceptance by the rider and time of cancellation. If cancellation spikes at exactly 6-8 min
+   post-acceptance → confirms multi-app booking
+   behaviour (enough time for second app to match)"
+
+3. Rating distribution- what kind of rating has increased - 1-star or 2-star. If spike in 1-star ratings → captains are
+   actively penalising riders (confirms frustration)
+
+If general downward shift → different cause
+(less enthusiastic ratings, not punitive ones)"
+
+> Fixes
+
+- increasing price during peak and introducing discounts are complinmentary and should not be done at the same time. So, either compete directly by introducing discounts again or curb the demand by increaing the prices further at peak hours.
+  Option A short-term (stop the bleeding),
+  Option B as a longer-term supply-demand rebalancing
+  once captain supply is stabilised.
+
+- Missing captain side fix so that they do not cancel, Introduce a "trip protection bonus" —
+  if a customer cancels after 5 minutes,
+  captain receives a partial fare payment. This causes the captain to not cancel the ride from his side espacially when it is takng him more time to arrive.
+
+       add a simple informating when users clicks on cancel button - Your scheduled ride is confirmed. Cancel only
+
+  if necessary — repeated cancellations affect
+  your rider rating.
+
+Monitoring
+
+Leading indicator - Captain acceptance rate
+Guardrail - active captain count
